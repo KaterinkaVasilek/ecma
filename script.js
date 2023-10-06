@@ -1,43 +1,45 @@
-// 1) Дан массив const arr = [1, 5, 7, 9] с помощью Math.min и spread оператора, найти минимальное число в массиве, решение задание должно состоять из одной строки
+// Задание 1: ""Управление библиотекой книг""
+// Реализуйте класс Book, представляющий книгу, со следующими свойствами и методами:
+// Свойство title (название) - строка, название книги.
+// Свойство author (автор) - строка, имя автора книги.
+// Свойство pages (количество страниц) - число, количество страниц в книге.
+// Метод displayInfo() - выводит информацию о книге (название, автор и количество страниц).
 
-const arr = [1, 5, 7, 9];
-console.log(Math.min(...arr));
+class Book {
+  constructor(title, author, pages) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+  }
 
-// 2) Напишите функцию createCounter, которая создает счетчик и возвращает объект с двумя методами: increment и decrement. Метод increment должен увеличивать значение счетчика на 1, а метод decrement должен уменьшать значение счетчика на 1. Значение счетчика должно быть доступно только через методы объекта, а не напрямую.
-
-const createCounter = () => {
-  let counter = 5;
-  return {
-    increment: () => {
-      ++counter;
-      console.log(counter);
-    },
-    decrement: () => {
-      --counter;
-      console.log(counter);
-    }
+  displayInfo = function() {
+    console.log(`${this.title}, ${this.author}, ${this.pages}`);
   }
 }
 
-let counterFunc = createCounter();
+const book_1 = new Book('Harry Potter', 'J.K. Rowling', 375);
+book_1.displayInfo();
 
-console.log(counterFunc.increment());
-console.log(counterFunc.decrement());
+// Задание 2: ""Управление списком студентов""
+// Реализуйте класс Student, представляющий студента, со следующими свойствами и методами:
+// Свойство name (имя) - строка, имя студента.
+// Свойство age (возраст) - число, возраст студента.
+// Свойство grade (класс) - строка, класс, в котором учится студент.
+// Метод displayInfo() - выводит информацию о студенте (имя, возраст и класс).
 
-// 3) Напишите рекурсивную функцию findElementByClass, которая принимает корневой элемент дерева DOM и название класса в качестве аргументов и возвращает первый найденный элемент с указанным классом в этом дереве.
-const body = document.body;
-
-const findElementByClass = (mainEl, elClass) => {
-  if(mainEl.classList.contains(elClass)) {
-    return mainEl;
+class Student {
+  constructor(name, age, grade) {
+    this.name = name;
+    this.age = age;
+    this.grade = grade;
   }
-  for(let i = 0; i <= mainEl.children.length; i++) {
-    return (findElementByClass(mainEl.children[i], elClass))
+  displayInfo = function() {
+    console.log(`${this.name}, ${this.age}, ${this.grade}`);
   }
-  return null;
 }
-const targetEl = findElementByClass(body, 'container__item');
 
-console.log(targetEl);
+const student_1 = new Student('Ivan Ivanov', 16, '1A');
+student_1.displayInfo();
 
-// я не очень поняла последнее дз, поэтому не уверена..
+const student_2 = new Student('Olga Petrova', 15, '1B');
+student_2.displayInfo();
