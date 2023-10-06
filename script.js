@@ -1,129 +1,59 @@
-// Задание 1: ""Управление персоналом компании""
-// Реализуйте класс Employee (сотрудник), который имеет следующие свойства и методы:
+// Задание 1: "Получение данных о пользователе"
 
-// Свойство name (имя) - строка, имя сотрудника.
-// Метод displayInfo() - выводит информацию о сотруднике (имя).
-// Реализуйте класс wq  d23Q2ZXX X XX, который наследует класс Employee и имеет дополнительное свойство и метод:
+// Реализуйте функцию getUserData, которая принимает идентификатор пользователя (ID) в качестве аргумента и использует fetch для получения данных о пользователе с заданным ID с удаленного сервера. Функция должна возвращать промис, который разрешается с данными о пользователе в виде объекта. Если пользователь с указанным ID не найден, промис должен быть отклонен с соответствующим сообщением об ошибке.
 
-// Свойство department (отдел) - строка, отдел, в котором работает менеджер.
-// Метод displayInfo() - переопределяет метод displayInfo() родительского класса и выводит информацию о менеджере (имя и отдел).
-// // Пример использования классов
-// const employee = new Employee(""John Smith"");
-// employee.displayInfo();
+// Подсказка, с последовательностью действий:
+// getUserData использует fetch для получения данных о пользователе с удаленного сервера. Если запрос успешен (с кодом 200), функция извлекает данные из ответа с помощью response.json() и возвращает объект с данными о пользователе. Если запрос неуспешен, функция отклоняет промис с сообщением об ошибке.
 
-// Вывод:
-// Name: John Smith
+const getUserData = async () => {
+  let response = await fetch('https://jsonplaceholder.typicode.com/users');
 
-// const manager = new Manager(""Jane Doe"", ""Sales"");
-// manager.displayInfo();
-
-// Вывод:
-// Name: Jane Doe
-// Department: Sales
-
-class Employee {
-  constructor(name) {
-    this.name = name;
-  }
-
-  displayInfo() {
-    console.log(this.name);
+  if (response.status === 200) {
+    let jsonResponse = await response.json();
+    console.log(jsonResponse);
+  } else {
+    console.log("Error: " + response.status);
   }
 }
 
-const employee_1 = new Employee('Lisa Garner');
-employee_1.displayInfo();
+getUserData();
 
-class Manager extends Employee {
-  constructor(name, department) {
-    super(name);
-    this.department = department;
-  }
+// Задание 2: "Отправка данных на сервер"
 
-  displayInfo() {
-    console.log(this.name, this.department)
-  }
+// Реализуйте функцию saveUserData, которая принимает объект с данными о пользователе в качестве аргумента и использует fetch для отправки этих данных на удаленный сервер для сохранения. Функция должна возвращать промис, который разрешается, если данные успешно отправлены, или отклоняется в случае ошибки.
+
+// saveUserData использует fetch для отправки данных о пользователе на удаленный сервер для сохранения. Она отправляет POST-запрос на URL-адрес /users с указанием типа содержимого application/json и сериализует объект с данными о пользователе в JSON-строку с помощью JSON.stringify(). Если запрос успешен (с кодом 200), функция разрешает промис. Если запрос неуспешен, функция отклоняет промис с сообщении
+
+const user = {
+  name: 'John Smith',
+  age: 30,
+  email: 'john@example.com'
+};
+const saveUserData = async (data) => {
+  let response = await fetch('/article/fetch/post/user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  });
 }
 
-const manager_1 = new Manager('Mark Baum', 'advertising');
-manager_1.displayInfo();
+saveUserData(user)
+  .then(() => {
+    console.log('User data saved successfully');
+  })
+  .catch((error) => console.log('Error:', error));
 
-// Задание 2: ""Управление списком заказов""
+// Заданеи 3: "Изменение стиля элемента через заданное время"
 
-// Реализуйте класс Order (заказ), который имеет следующие свойства и методы:
+// Напишите функцию changeStyleDelayed, которая принимает идентификатор элемента и время задержки (в миллисекундах) в качестве аргументов. Функция должна изменить стиль элемента через указанное время.
 
-// Свойство orderNumber (номер заказа) - число, уникальный номер заказа.
-// Свойство products (продукты) - массив, содержащий список продуктов в заказе.
-// Метод addProduct(product) - принимает объект product и добавляет его в список продуктов заказа.
-// Метод getTotalPrice() - возвращает общую стоимость заказа, основанную на ценах продуктов.
+// // Пример использования функции
+// changeStyleDelayed('myElement', 2000); // Через 2 секунды изменяет стиль элемента с id 'myElement'"
 
-// // Пример использования класса
-// class Product {
-// constructor(name, price) {
-// this.name = name;
-// this.price = price;
-// }
-// }
+const list = document.querySelector("#list");
 
-// const order = new Order(12345);
-
-// const product1 = new Product(""Phone"", 500);
-// order.addProduct(product1);
-
-// const product2 = new Product(""Headphones"", 100);
-// order.addProduct(product2);
-
-// console.log(order.getTotalPrice()); // Вывод: 600
-
-class Product {
-  constructor(name, price) {
-  this.name = name;
-  this.price = price;
-  }
-}
-
-class Order {
-  constructor(orderNumber) {
-    this.orderNumber = orderNumber;
-  }
-
-  products = [];
-
-  addProduct(product) {
-    this.products.push(product)
-  }
-
-  getTotalPrice() {
-    if(this.products.length == 0) {
-      return;
-    } else {
-      let result = 0;
-      this.products.forEach(item => {
-        result += item.price;
-      })
-      return result;
-    }
-  }
-}
-
-const order = new Order(125);
-
-const product1 = new Product("Phone", 500);
-order.addProduct(product1);
-
-const product2 = new Product("Headphones", 100);
-order.addProduct(product2);
-
-console.log(order.getTotalPrice());
-console.log(order);
-
-const order2 = new Order(789);
-
-const product3 = new Product("Laptop", 50000);
-order2.addProduct(product3);
-
-const product4 = new Product("Smartphone", 1000);
-order2.addProduct(product4);
-
-console.log(order2.getTotalPrice());
-console.log(order2);
+setTimeout(() => {
+  list.classList.add('container__list--background')
+}, 5000);
